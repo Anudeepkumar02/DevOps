@@ -1,2 +1,6 @@
+# Docker tag
+
 docker tag myImage myusername/myimage:latest 
+
+# Docker push to Hub
 docker push myusername/myimage:latest
