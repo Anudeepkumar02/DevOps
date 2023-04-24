@@ -1,0 +1,2 @@
+docker tag myImage myusername/myimage:latest 
+docker push myusername/myimage:latest
