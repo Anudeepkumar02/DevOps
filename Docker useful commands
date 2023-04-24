@@ -1,6 +1,124 @@
 # Docker tag
-
 docker tag myImage myusername/myimage:latest 
 
 # Docker push to Hub
 docker push myusername/myimage:latest
+
+how do you manage Image commands :
+
+1. docker images :  is used to list the docker images.
+=============================================================
+2. docker rmi : is used to remove docker images.
+
+ex: docker rmi feb5d9fea6a5
+ex: docker rmi -f feb5d9fea6a5
+=============================================================
+3. docker pull : is used to pull image from docker hub registry.
+
+ex: docker pull ubuntu:16.04
+ex: docker pull ubuntu:18.04
+
+=============================================================
+docker history : is used to check the history of an Image.
+
+ex: docker history ubuntu:16.04
+ex:  docker history b6f507652425
+
+=============================================================
+
+How do you manage containers?
+
+1. docker ps : is used to list the running containers.
+ex: docker ps
+=============================================================
+2. docker ps  -a : is used to list all the containers (exited/running/paused/killed)
+ex: docker ps -a
+
+=============================================================
+3. docker rm :  to remove a containers
+ex: docker rm -f dd
+=============================================================
+4. docker run : is used to run a new container.
+ex: docker run -it --name secondcontainer  ubuntu:18.04   bash
+- i = interactive
+- t = terminal
+- name = custom_name
+=============================================================
+
+5. docker exec : is used to login/switch to a running container.
+ex: docker exec -it firstcontainer bash 
+=============================================================
+6. docker logs :  is used to check the logs for a running container.
+ex:  docker logs firstcontainer
+=============================================================
+Useful ommands :  
+1. docker images -q | xargs docker rmi -f 
+or
+   docker rmi -f `docker images -q`
+2.  docker  ps -q |  xargs docker rm -f
+
+=============================================================
+Volumes :::::  is used to persist/save the data when container is terminated.
+
+docker volume create : is used to create a volume.
+docker volume ls :  is used to list the volume.
+docker volume rm :  is used to remove one or  more volumes.
+
+=============================================================
+Network : 
+
+bridge :  by default isolate the containers within the network, outside process/services are by default blocked.
+
+host :   By default no isolation  for containers, outside process/services can access your containers which are hosted on HOst network.
+
+null  :   blocked outbound traffic as well
+
+=============================================================
+Complete Command to run DOcker container::::::
+ 
+docker run -dit --name container_one -v flipkart --net flipkart --restart  always   ubuntu:16.04 
+
+
+=============================================================
+docker commit :  is used to create a image from a running container.
+
+ex:   docker commit cb3a8973b1ad  abcccc
+
+=============================================================
+1.  docker pull tomcat:8
+2. docker run -d --name build_phase tomcat:8
+3. 
+3. docker cp sample.war  build_phase:/usr/loca/tomcat/webapps/
+4. docker commit build_phase 
+
+=============================================================
+docker build : is used to create a image from docker file.
+ex:  docker build -t repository:tagname  . 
+
+=============================================================
+
+Dockerfile::::
+
+
+FROM tomcat:8
+MAINTAINER sreenivas.g@samsung.com
+ENV MY_NAME="John Doe"
+ENV MY_DOG=Rex\ The\ Dog
+ENV MY_CAT=fluffy
+EXPOSE 8080
+LABEL "server"="dev" \
+      "project"="flipkart"
+COPY sample.war /usr/local/tomcat/webapps/
+RUN apt update && apt -y install \
+    zip \
+    unzip \
+    tree  \
+    net-tools
+ENTRYPOINT ["sleep"]
+CMD ["100s"]
+
+=============================================================
+
+
+
+
